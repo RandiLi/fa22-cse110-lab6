@@ -129,8 +129,8 @@ class RecipeCard extends HTMLElement {
     const articleEl = this.shadowRoot.querySelector('article');
 
     const img1 = document.createElement('img');
-    img1.imgSrc = data['imgSrc'];  // <img src="imgSrc" alt="imgAlt">
-    img1.imgAlt = data['imgAlt'];
+    img1.src = data['imgSrc'];  // <img src="imgSrc" alt="imgAlt">
+    img1.alt = data['imgAlt'];
     articleEl.appendChild(img1);
 
     const p1 = document.createElement('p');
@@ -153,8 +153,8 @@ class RecipeCard extends HTMLElement {
     spanR.appendChild(document.createTextNode(data['rating']));  // </span>
     
     const imgR = document.createElement('img');   // <img src="" alt="">
-    imgR.imgSrc = "./assets/images/icons/" + data['rating'] + "-star.svg";
-    imgR.imgAlt = data['rating'] + " stars";
+    imgR.src = "./assets/images/icons/" + data['rating'] + "-star.svg";
+    imgR.alt = data['rating'] + " stars";
 
     const spanN = document.createElement('span');                 // <span> numRatings
     spanN.append(document.createTextNode('(' + data['numRatings'] + ')'));  // </span>
