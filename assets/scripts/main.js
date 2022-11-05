@@ -10,7 +10,7 @@ function init() {
   // Add each recipe to the <main> element
   addRecipesToDocument(recipes);
   // Add the event listeners to the form elements
-  initFormHandler();
+  initFormHandler();  
 }
 
 /**
@@ -21,7 +21,9 @@ function init() {
  * @returns {Array<Object>} An array of recipes found in localStorage
  */
 function getRecipesFromStorage() {
-  return JSON.parse(localStorage.getItem('recipes')); // Parse and return
+  let recipes = localStorage.getItem('recipes');
+  if(recipes) return JSON.parse(recipes); // Parse and return
+  return [];                              // Empty array
 
   // A9. TODO - Complete the functionality as described in this function
   //           header. It is possible in only a single line, but should
@@ -57,6 +59,7 @@ function addRecipesToDocument(recipes) {
  */
 function saveRecipesToStorage(recipes) {
   // EXPLORE - START (All explore numbers start with B)
+  localStorage.setItem('recipes', JSON.stringify(recipes));
   // B1. TODO - Complete the functionality as described in this function
   //            header. It is possible in only a single line, but should
   //            be no more than a few lines.
@@ -69,7 +72,30 @@ function saveRecipesToStorage(recipes) {
 function initFormHandler() {
 
   // B2. TODO - Get a reference to the <form> element
-  
+  const formEl = document.getElementById('new-recipe'); // Reference to <form>
+  const mainEl = document.querySelector('main');        // Reference to <main>
+
+  formEl.addEventListener('submit', (event) =>{
+    const newForm = new FormData(formEl);               // FormData with form element
+    const recipeObject = {};                            // Object
+    for(const pair of newForm.entries()) {              // Populate entries
+      recipeObject[pair[0]] = pair[1];
+    }
+    const recCard = document.createElement('recipe-card');
+    recCard.data = recipeObject;                        // Populate recipe-card
+    mainEl.appendChild(recCard);
+
+    const recArray = getRecipesFromStorage();           // Get array from localStorage
+    recArray.push(recipeObject);                        // Append
+    saveRecipesToStorage(recArray);                     // Save to localStorage
+  });
+
+  const button = document.querySelectorAll('button')[1];
+  button.addEventListener('click', (event)=>{
+    localStorage.clear();                               // Clear localStorage
+    document.querySelector('main').innerHTML = "";      // Clear <main>
+  });
+
   // B3. TODO - Add an event listener for the 'submit' event, which fires when the
   //            submit button is clicked
 
