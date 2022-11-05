@@ -125,57 +125,26 @@ class RecipeCard extends HTMLElement {
     // If nothing was passed in, return
     if (!data) return;
 
-    // <article>
+    // Select the <article>
     const articleEl = this.shadowRoot.querySelector('article');
 
-    const img1 = document.createElement('img');
-    img1.src = data['imgSrc'];  // <img src="imgSrc" alt="imgAlt">
-    img1.alt = data['imgAlt'];
-    articleEl.appendChild(img1);
-
-    const p1 = document.createElement('p');
-    p1.className = "title";        // <p class="title">
-    
-    const aEl = document.createElement('a');
-    aEl.href = data['titleLnk'];   // <a href="">
-    aEl.appendChild(document.createTextNode(data['titleTxt']));
-    p1.appendChild(aEl);           // </a>
-    articleEl.appendChild(p1);     // </p>
-
-    const p2 = document.createElement('p');
-    p2.className = 'organization';  // <p class="organizatoin"
-    p2.appendChild(document.createTextNode(data['organization']));
-    articleEl.appendChild(p2);      // </p>
-
-    const divEl = document.createElement('div');
-    divEl.className = 'rating';     // <div class="rating">
-    const spanR = document.createElement('span');                // <span>Rating
-    spanR.appendChild(document.createTextNode(data['rating']));  // </span>
-    
-    const imgR = document.createElement('img');   // <img src="" alt="">
-    imgR.src = "./assets/images/icons/" + data['rating'] + "-star.svg";
-    imgR.alt = data['rating'] + " stars";
-
-    const spanN = document.createElement('span');                 // <span> numRatings
-    spanN.append(document.createTextNode('(' + data['numRatings'] + ')'));  // </span>
-
-    divEl.appendChild(spanR);
-    divEl.appendChild(imgR);
-    divEl.appendChild(spanN);
-    articleEl.appendChild(divEl);   // </div>
-
-    const timeEl = document.createElement('time');  // <time>
-    timeEl.appendChild(document.createTextNode(data['lengthTime']));
-    articleEl.appendChild(timeEl);                  // </time>
-
-    const p3 = document.createElement('p');
-    p3.className = "ingredients";   // <p class="ingredients">
-    p3.appendChild(document.createTextNode(data['ingredients']));
-    articleEl.appendChild(p3);      // </p>
-
-    // </article>
-
-
+    // Set contents
+    articleEl.innerHTML = `
+    <img src="${data['imgSrc']}"
+    alt="${data['imgAlt']}">
+    <p class="title">
+      <a href="${data['titleLnk']}">${data['titleTxt']}</a>
+    </p>
+    <p class="organization">${data['organization']}</p>
+    <div class="rating">
+      <span>${data['rating']}</span>
+      <img src="${"./assets/images/icons/" + data['rating'] + "-star.svg"}" alt="${data['rating'] + " stars"}">
+      <span>(${data['numRatings']})</span>
+    </div>
+    <time>${data['lengthTime']}</time>
+    <p class="ingredients">
+      ${data['ingredients']}
+    </p>`;
 
     // A6. TODO - Select the <article> we added to the Shadow DOM in the constructor
     // A7. TODO - Set the contents of the <article> with the <article> template given in
